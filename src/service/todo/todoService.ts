@@ -24,7 +24,7 @@ export class TodoService extends BaseService {
     return this.http.post<PostCreateTodoResponse>(
       "/todo",
       data,
-      undefined,
+      { baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT },
       true
     );
   }
