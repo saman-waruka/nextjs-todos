@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { LabelHTMLAttributes, ReactNode } from "react";
 
 interface IFormLabelProps {
@@ -6,7 +7,9 @@ interface IFormLabelProps {
 }
 
 const FormLabel = ({ className, text }: IFormLabelProps) => {
-  return <label className={className}>{text}</label>;
+  return (
+    <label className={classNames("mx-auto my-auto", className)}>{text}</label>
+  );
 };
 
 export default FormLabel;
