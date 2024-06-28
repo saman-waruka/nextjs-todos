@@ -24,15 +24,15 @@ export default function TodoPage() {
     getTodos();
   }, [getTodos, lastFetch]);
 
-  const onCreateSuccess = useCallback(() => {
+  const onSuccess = useCallback(() => {
     setLastFetch(new Date().getTime());
   }, []);
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col justify-center items-center p-4">
       <div className="p-5 font-bold text-2xl">Todos</div>
-      <TodoListContainer />
-      <CreateTodoModal onCreateSuccess={onCreateSuccess} />
+      <TodoListContainer todos={todos} />
+      <CreateTodoModal onSuccess={onSuccess} />
     </div>
   );
 }
