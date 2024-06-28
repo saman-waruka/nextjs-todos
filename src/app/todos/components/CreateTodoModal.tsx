@@ -1,27 +1,32 @@
 "use client";
 import React, { useCallback, useMemo, useState } from "react";
-import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 import Modal from "react-modal";
 import { Todo } from "../todo.interface";
 import { TodoService } from "@/service/todo/todoService";
 import { createTodoSchema } from "@/components/Form/validation/todoSchema";
 import FormLabel from "@/components/Form/Label/FormLabel";
+import InputField from "@/components/Form/Input/InputField";
+import ErrorLabel from "@/components/Form/Label/ErrorLabel";
 
 Modal.setAppElement("#root");
 
-interface CreateTodoProps {
-  onCreateSuccess?: () => void;
-}
-
 interface IFormValues {
+  id?: string;
   title: string;
-  desc: string;
+  description: string;
 }
 
-const initialValues: IFormValues = {
+const initialFormValues: IFormValues = {
   title: "",
-  desc: "",
+  description: "",
 };
+
+interface CreateTodoProps {
+  onSuccess?: () => void;
+  isEditMode?: boolean;
+  initialValues?: IFormValues;
+}
 
 const customStyles = {
   content: {
@@ -35,7 +40,11 @@ const customStyles = {
   },
 };
 
-const CreateTodoModal = ({ onCreateSuccess = () => {} }: CreateTodoProps) => {
+const CreateTodoModal = ({
+  onSuccess = () => {},
+  initialValues = initialFormValues,
+  isEditMode = false,
+}: CreateTodoProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -47,9 +56,9 @@ const CreateTodoModal = ({ onCreateSuccess = () => {} }: CreateTodoProps) => {
 
   const onSetShowSuccessAlert = useCallback(() => {
     setIsSuccess(true);
-    onCreateSuccess();
+    onSuccess();
     setTimeout(() => setIsSuccess(false), 2000);
-  }, [onCreateSuccess]);
+  }, [onSuccess]);
 
   const onSetShowErrorAlert = useCallback(() => {
     setIsError(true);
@@ -57,9 +66,8 @@ const CreateTodoModal = ({ onCreateSuccess = () => {} }: CreateTodoProps) => {
   }, []);
 
   const onSubmit = useCallback(
-    async (values: IFormValues, actions: any) => {
-      console.log(" submit ");
-      alert("Submit");
+    async (values: IFormValues, formikHelpers: FormikHelpers<IFormValues>) => {
+      console.log("submit ", values);
       try {
         const newTodo: Todo = {
           ...values,
@@ -75,14 +83,24 @@ const CreateTodoModal = ({ onCreateSuccess = () => {} }: CreateTodoProps) => {
         console.error(" Create todo error\n", error);
         onSetShowErrorAlert();
       } finally {
-        actions.resetForm({
-          values: initialValues,
-        });
+        formikHelpers.resetForm();
+        onClose();
       }
     },
 
-    [onSetShowErrorAlert, onSetShowSuccessAlert, todoService]
+    [onClose, onSetShowErrorAlert, onSetShowSuccessAlert, todoService]
   );
+
+  const formik = useFormik<IFormValues>({
+    initialValues,
+    validationSchema: createTodoSchema,
+    onSubmit: onSubmit,
+  });
+
+  const closeAndReset = useCallback(() => {
+    onClose();
+    formik.resetForm();
+  }, [formik, onClose]);
 
   return (
     <div id="root" className="h-full w-full">
@@ -98,70 +116,64 @@ const CreateTodoModal = ({ onCreateSuccess = () => {} }: CreateTodoProps) => {
         <Modal isOpen={isOpen} style={customStyles}>
           <div>
             <div className="flex justify-end -mt-2">
-              <button onClick={onClose}>X</button>
+              <button onClick={closeAndReset}>X</button>
             </div>
 
-            <Formik
-              initialValues={initialValues}
-              onSubmit={onSubmit}
-              validationSchema={createTodoSchema}
+            <form
+              id="login-form"
+              onSubmit={formik.handleSubmit}
+              className="flex flex-col gap-y-4 w-fit mx-auto"
             >
-              {({ isSubmitting }) => (
-                <Form className="">
-                  <div className="flex">
-                    <FormLabel text="Title:" className="mr-3" />
-                    <Field
-                      className="px-2"
-                      type="text"
-                      name="title"
-                      placeholder="Enter title"
-                      disabled={isSubmitting}
-                    />
-                    <ErrorMessage
-                      name="title"
-                      component="div"
-                      className="text-red-500 ml-3"
-                    />
-                  </div>
-                  <div className="flex">
-                    <FormLabel text="Description:" className="mr-3" />
+              <div className="flex w-fit justify-center align-middle">
+                <FormLabel text="Title: " className="w-[100px]" />
+                <InputField
+                  id="title"
+                  name="title"
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                  }}
+                  value={formik.values.title}
+                />
+                {formik.touched.title && formik.errors.title ? (
+                  <ErrorLabel text={formik.errors.title} className="ml-3" />
+                ) : null}
+              </div>
+              <div className="flex w-fit">
+                <FormLabel text="Description: " className="w-[100px]" />
+                <InputField
+                  id="description"
+                  name="description"
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                  }}
+                  value={formik.values.description}
+                />
+                {formik.touched.description && formik.errors.description ? (
+                  <ErrorLabel
+                    text={formik.errors.description}
+                    className="ml-3"
+                  />
+                ) : null}
+              </div>
 
-                    <Field
-                      className="px-2"
-                      type="textarea"
-                      name="desc"
-                      placeholder="Enter description"
-                      disabled={isSubmitting}
-                      columns={40}
-                      row={20}
-                    />
-                    <ErrorMessage
-                      name="desc"
-                      component="div"
-                      className="text-red-500 ml-3"
-                    />
-                  </div>
+              <div className="flex flex-row gap-x-5 mt-3 justify-center">
+                <button
+                  type="button"
+                  className="p-2 px-3 rounded-md outline outline-2 outline-red-400"
+                  onClick={closeAndReset}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="p-2 px-3 rounded-md outline outline-2 outline-blue-400 disabled:cursor-not-allowed"
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                >
+                  {isEditMode ? "Update" : "Create"}
+                </button>
+              </div>
+            </form>
 
-                  <div className="flex flex-row gap-x-5 mt-3 justify-center">
-                    <button
-                      type="button"
-                      className="p-2 px-3 rounded-md outline outline-2 outline-red-400"
-                      onClick={onClose}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="p-2 px-3 rounded-md outline outline-2 outline-blue-400 disabled:cursor-not-allowed"
-                      type="submit"
-                      disabled={isSubmitting}
-                      onClick={() => alert("5555")}
-                    >
-                      Create
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
             {isSuccess && (
               <div className=" mx-auto w-1/3 bg-green-100 border border-green-400 text-green-400 px-4 py-3 rounded relative">
                 <strong className="font-bold">Success!</strong>

@@ -2,7 +2,7 @@ export interface Todo {
   id?: string;
   no: number;
   title: string;
-  desc: string;
+  description: string;
   completed: boolean;
   created_by?: {
     id: string;

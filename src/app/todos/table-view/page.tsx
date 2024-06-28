@@ -18,7 +18,7 @@ const ConfigOptions = {
       name: "Title",
     },
     {
-      key: "desc",
+      key: "description",
       name: "Description",
     },
     {
@@ -31,21 +31,21 @@ const ConfigOptions = {
       id: "f22ecad5-cbb6-402b-995f-6867792bc9c6",
       no: 1,
       title: "Job 1",
-      desc: "This is job 1",
+      description: "This is job 1",
       date: "1 Oct 2023 12:03:48",
     },
     {
       id: "f22ecad5-cbb6-402b-995f-6867792bc9c7",
       no: 2,
       title: "Job 2",
-      desc: "This is job 2",
+      description: "This is job 2",
       date: "1 Oct 2023 12:03:48",
     },
     {
       id: "f22ecad5-cbb6-402b-995f-6867792bc9c8",
       no: 3,
       title: "Job 3",
-      desc: "This is job 3",
+      description: "This is job 3",
       date: "1 Oct 2023 12:03:48",
     },
   ],
