@@ -15,7 +15,8 @@ export class TodoService extends BaseService {
     return this.http.get<GetAllTodoResponse>(
       "/todo",
       undefined,
-      { baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT },
+      undefined,
+
       true
     );
   }
@@ -24,7 +25,7 @@ export class TodoService extends BaseService {
     return this.http.post<PostCreateTodoResponse>(
       "/todo",
       data,
-      { baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT },
+      undefined,
       true
     );
   }

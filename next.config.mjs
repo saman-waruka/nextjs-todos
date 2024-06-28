@@ -4,7 +4,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/proxy-api/:path*",
+        source: `/proxy-api/:path*`,
         destination: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/:path*`,
       },
     ];
