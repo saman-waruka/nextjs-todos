@@ -104,14 +104,16 @@ const CreateTodoModal = ({
 
   return (
     <div id="root" className="h-full w-full">
-      <div className="flex justify-center">
-        <button
-          className="mx-auto w-fit bg-blue-100 p-2 rounded-md outline outline-2 outline-blue-300 my-10"
-          onClick={() => setIsOpen(true)}
-        >
-          + Create
-        </button>
-      </div>
+      {isEditMode ? null : (
+        <div className="flex justify-center">
+          <button
+            className="mx-auto w-fit bg-blue-100 p-2 rounded-md outline outline-2 outline-blue-300 my-10"
+            onClick={() => setIsOpen(true)}
+          >
+            + Create
+          </button>
+        </div>
+      )}
       <div className="m-auto">
         <Modal isOpen={isOpen} style={customStyles}>
           <div>
