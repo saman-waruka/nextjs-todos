@@ -5,6 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   console.log(" Activate middleware ", request.url);
   // console.log("headers", request.headers);
+  if (request.url.match(/(robots|sitemap)/)) {
+    return NextResponse.next();
+  }
 
   try {
     const cookieToken = request.cookies.get(CREDENTIAL.ACCESS_TOKEN);
