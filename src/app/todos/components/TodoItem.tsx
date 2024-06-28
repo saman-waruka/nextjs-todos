@@ -2,6 +2,7 @@ import React, { ReactNode, useCallback, useState } from "react";
 import { Todo } from "../todo.interface";
 import Modal from "react-modal";
 import { TodoService } from "@/service/todo/todoService";
+import CreateUpdateTodoModal from "./CreateUpdateTodoModal";
 
 interface TodoItemProps {
   todo: Todo;
@@ -41,6 +42,11 @@ export default function TodoItem({
     }
   }, [onSuccess, todo.id]);
 
+  const onUpdateSuccess = useCallback(() => {
+    onSuccess();
+    setIsEditMode(false);
+  }, [onSuccess]);
+
   return (
     <div
       key={todo.id}
@@ -65,6 +71,13 @@ export default function TodoItem({
           {(todo.date || todo.created_at || "") as ReactNode}
         </div>
       </div>
+      {isEditMode && (
+        <CreateUpdateTodoModal
+          onSuccess={onUpdateSuccess}
+          isEditMode
+          initialValues={todo}
+        />
+      )}
 
       <Modal isOpen={isShowConfirmDeleteModal} style={customStyles}>
         <div>

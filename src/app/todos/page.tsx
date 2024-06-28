@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import CreateTodoModal from "./components/CreateTodoModal";
+import CreateTodoModal from "./components/CreateUpdateTodoModal";
 import { TodoService } from "@/service/todo/todoService";
 import TodoListContainer from "./components/TodoListContainer";
 import { Todo } from "./todo.interface";

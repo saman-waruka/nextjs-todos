@@ -24,6 +24,6 @@ export class TodoService extends BaseService {
   }
 
   async update(id: string, data: Partial<Todo>) {
-    return this.http.put(`/todo/${id}`, data, true);
+    return this.http.patch(`/todo/${id}`, data, true);
   }
 }

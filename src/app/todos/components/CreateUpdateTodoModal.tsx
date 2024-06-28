@@ -9,8 +9,6 @@ import FormLabel from "@/components/Form/Label/FormLabel";
 import InputField from "@/components/Form/Input/InputField";
 import ErrorLabel from "@/components/Form/Label/ErrorLabel";
 
-Modal.setAppElement("#root");
-
 interface IFormValues {
   id?: string;
   title: string;
@@ -40,15 +38,17 @@ const customStyles = {
   },
 };
 
-const CreateTodoModal = ({
+export default function CreateUpdateTodoModal({
   onSuccess = () => {},
   initialValues = initialFormValues,
   isEditMode = false,
-}: CreateTodoProps) => {
+}: CreateTodoProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const todoService = useMemo(() => new TodoService(), []);
+
+  console.log("CreateUpdateTodoModal isEditMode", isEditMode);
 
   const onClose = useCallback(() => {
     setIsOpen(false);
@@ -65,7 +65,7 @@ const CreateTodoModal = ({
     setTimeout(() => setIsError(false), 2000);
   }, []);
 
-  const onSubmit = useCallback(
+  const onSubmitCreate = useCallback(
     async (values: IFormValues, formikHelpers: FormikHelpers<IFormValues>) => {
       console.log("submit ", values);
       try {
@@ -91,10 +91,43 @@ const CreateTodoModal = ({
     [onClose, onSetShowErrorAlert, onSetShowSuccessAlert, todoService]
   );
 
+  const onSubmitUpdate = useCallback(
+    async (values: IFormValues, formikHelpers: FormikHelpers<IFormValues>) => {
+      console.log("submit ", values);
+      try {
+        const newTodo: Todo = {
+          ...values,
+          updated_at: new Date().toISOString(),
+        } as Todo;
+
+        const response = await todoService.update(
+          initialValues.id as string,
+          newTodo
+        );
+        console.log("response.data", response.data);
+        onSetShowSuccessAlert();
+      } catch (error) {
+        console.error(" Create todo error\n", error);
+        onSetShowErrorAlert();
+      } finally {
+        formikHelpers.resetForm();
+        onClose();
+      }
+    },
+
+    [
+      initialValues.id,
+      onClose,
+      onSetShowErrorAlert,
+      onSetShowSuccessAlert,
+      todoService,
+    ]
+  );
+
   const formik = useFormik<IFormValues>({
     initialValues,
     validationSchema: createTodoSchema,
-    onSubmit: onSubmit,
+    onSubmit: isEditMode ? onSubmitUpdate : onSubmitCreate,
   });
 
   const closeAndReset = useCallback(() => {
@@ -115,7 +148,7 @@ const CreateTodoModal = ({
         </div>
       )}
       <div className="m-auto">
-        <Modal isOpen={isOpen} style={customStyles}>
+        <Modal isOpen={isOpen || isEditMode} style={customStyles}>
           <div>
             <div className="flex justify-end -mt-2">
               <button onClick={closeAndReset}>X</button>
@@ -196,6 +229,4 @@ const CreateTodoModal = ({
       </div>
     </div>
   );
-};
-
-export default CreateTodoModal;
+}
