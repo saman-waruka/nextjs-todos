@@ -1,6 +1,8 @@
 
 # Getting Started
 
+[LiveDemo](https://nextjs-todos-demo.vercel.app/)
+
 ## To start this project
 1. Install dependencies
 ```bash
