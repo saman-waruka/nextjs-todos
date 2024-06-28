@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useFormik } from "formik";
 import { redirect, useRouter } from "next/navigation";
 
-import { loginSchema } from "@/components/Form/validation/loginSchema";
+import { loginSchema } from "@/components/Form/validation/authSchema";
 import InputField from "@/components/Form/Input/InputField";
 import FormLabel from "@/components/Form/Label/FormLabel";
 import ErrorLabel from "@/components/Form/Label/ErrorLabel";
@@ -71,7 +71,9 @@ const LoginPage = () => {
             formik.handleChange(e);
             setErrorMessage("");
           }}
+          value={formik.values.username}
         />
+
         {formik.errors.username ? (
           <ErrorLabel text={formik.errors.username} className="ml-3" />
         ) : null}
@@ -86,12 +88,12 @@ const LoginPage = () => {
             setErrorMessage("");
           }}
           type="password"
+          value={formik.values.password}
         />
         {formik.errors.password ? (
           <ErrorLabel text={formik.errors.password} className="ml-3" />
         ) : null}
       </form>
-      <ErrorLabel text={formik.errors.username} className="ml-3" />
       {errorMessage ? (
         <ErrorLabel
           text={errorMessage}

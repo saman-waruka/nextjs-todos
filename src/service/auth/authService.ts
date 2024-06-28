@@ -13,4 +13,14 @@ export class AuthService extends BaseService {
   ): Promise<AxiosResponse<ILoginResponse>> {
     return this.http.post<ILoginResponse>("auth/login", { username, password });
   }
+
+  async register(
+    username: string,
+    password: string
+  ): Promise<AxiosResponse<ILoginResponse>> {
+    return this.http.post<ILoginResponse>("/users", {
+      username,
+      password,
+    });
+  }
 }
