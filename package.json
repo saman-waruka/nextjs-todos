@@ -2,6 +2,7 @@
   "name": "nextjs-todos",
   "version": "0.1.0",
   "private": true,
+  "repository": "https://github.com/saman-waruka/nextjs-todos",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

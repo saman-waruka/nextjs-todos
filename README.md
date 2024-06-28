@@ -3,6 +3,8 @@
 
 [Live Demo](https://nextjs-todos-demo.vercel.app/)
 
+Repository : [nextjs-todos](https://github.com/saman-waruka/nextjs-todos)
+
 ## To start this project
 1. Install dependencies
 ```bash
@@ -36,6 +38,7 @@ src
 └-- app
     └--robots.ts
 ```
+for more detail: [https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots)
 
 - for ```sitemap.xml``` generation please see ```src/app/sitemap.ts```
   
@@ -44,7 +47,7 @@ src
 └-- app
     └--sitemap.ts
 ```
-
+for more detail: [https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap)
 
 ## Project Structure
 ### To create a page create page.tsx in sub-directory of ```src/app/```
