@@ -12,21 +12,18 @@ export class TodoService extends BaseService {
   }
 
   async getAll() {
-    return this.http.get<GetAllTodoResponse>(
-      "/todo",
-      undefined,
-      undefined,
-
-      true
-    );
+    return this.http.get<GetAllTodoResponse>("/todo", null, true);
   }
 
   async create(data: Todo) {
-    return this.http.post<PostCreateTodoResponse>(
-      "/todo",
-      data,
-      undefined,
-      true
-    );
+    return this.http.post<PostCreateTodoResponse>("/todo", data, true);
+  }
+
+  async delete(id: string) {
+    return this.http.delete(`/todo/${id}`, null, true);
+  }
+
+  async update(id: string, data: Partial<Todo>) {
+    return this.http.put(`/todo/${id}`, data, true);
   }
 }

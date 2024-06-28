@@ -2,7 +2,7 @@ import { Token } from "@/utils/token.utils";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 export type RxiosConfig = AxiosRequestConfig;
 
-type BasicObject = Record<string, unknown> | object;
+type BasicObject = Record<string, unknown> | object | null;
 
 enum HttpMethod {
   GET = "GET",
@@ -47,8 +47,8 @@ export class HttpService {
   public get<T>(
     url: string,
     params?: BasicObject,
-    config?: AxiosRequestConfig,
-    isAuth?: boolean
+    isAuth?: boolean,
+    config?: AxiosRequestConfig
   ) {
     const request = {
       method: HttpMethod.GET,
@@ -62,8 +62,8 @@ export class HttpService {
   public post<T>(
     url: string,
     payload: BasicObject,
-    config: AxiosRequestConfig = {},
-    isAuth?: boolean
+    isAuth?: boolean,
+    config: AxiosRequestConfig = {}
   ) {
     const request = {
       method: HttpMethod.POST,
@@ -77,8 +77,8 @@ export class HttpService {
   public put<T>(
     url: string,
     payload: BasicObject,
-    config: AxiosRequestConfig = {},
-    isAuth?: boolean
+    isAuth?: boolean,
+    config: AxiosRequestConfig = {}
   ) {
     const request = {
       method: HttpMethod.PUT,
@@ -92,8 +92,8 @@ export class HttpService {
   public patch<T>(
     url: string,
     payload: BasicObject,
-    config: AxiosRequestConfig = {},
-    isAuth?: boolean
+    isAuth?: boolean,
+    config: AxiosRequestConfig = {}
   ) {
     const request = {
       method: HttpMethod.PATCH,
@@ -107,8 +107,8 @@ export class HttpService {
   public delete<T>(
     url: string,
     params?: BasicObject,
-    config: AxiosRequestConfig = {},
-    isAuth?: boolean
+    isAuth?: boolean,
+    config: AxiosRequestConfig = {}
   ) {
     const request = {
       method: HttpMethod.DELETE,
