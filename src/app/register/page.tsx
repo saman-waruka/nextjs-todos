@@ -13,6 +13,7 @@ import { ROUTE } from "@/constants/route";
 import { Token } from "@/utils/token.utils";
 import ReactModal from "react-modal";
 import Link from "next/link";
+import Logo from "@/components/Logo/Logo";
 
 export interface ILoginValues {
   username: string;
@@ -79,12 +80,13 @@ export default function RegisterPage() {
   }, [router]);
 
   return (
-    <main className="flex min-h-screen flex-col p-24 align-middle">
+    <main className="flex h-screen flex-col p-24 align-middle">
       <form
         id="login-form"
         onSubmit={formik.handleSubmit}
-        className="w-fit mx-auto"
+        className="w-fit mx-auto my-auto"
       >
+        <Logo />
         <InputRow>
           <FormLabel text="Username: " className="w-[200px]" />
           <InputField

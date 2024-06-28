@@ -12,6 +12,7 @@ import ErrorLabel from "@/components/Form/Label/ErrorLabel";
 import { AuthService } from "@/service/auth/authService";
 import { ROUTE } from "@/constants/route";
 import { Token } from "@/utils/token.utils";
+import Logo from "@/components/Logo/Logo";
 
 export interface ILoginValues {
   username: string;
@@ -62,8 +63,9 @@ const LoginPage = () => {
   console.log(" formik.status", formik.status);
 
   return (
-    <div className="flex flex-col align-middle">
+    <div className="flex flex-col align-middle my-auto">
       <form id="login-form" onSubmit={formik.handleSubmit}>
+        <Logo />
         <FormLabel text="Username: " />
         <InputField
           id="username"
