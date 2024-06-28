@@ -12,6 +12,7 @@ import { AuthService } from "@/service/auth/authService";
 import { ROUTE } from "@/constants/route";
 import { Token } from "@/utils/token.utils";
 import ReactModal from "react-modal";
+import Link from "next/link";
 
 export interface ILoginValues {
   username: string;
@@ -138,6 +139,15 @@ export default function RegisterPage() {
             className="mx-auto outline outline-1 outline-red-400 rounded-md py-1 px-2 mt-4"
           />
         ) : null}
+        <div className="mt-3 text-right text-[10px]">
+          Already have an account?{" "}
+          <Link
+            href={ROUTE.LOGIN}
+            className="font-bold text-[12px] text-blue-500"
+          >
+            Login
+          </Link>
+        </div>
         <div className="flex justify-center">
           <button
             form="login-form"
@@ -148,6 +158,7 @@ export default function RegisterPage() {
           </button>
         </div>
       </form>
+
       <ReactModal isOpen={isShowSuccessModal} style={customStyles}>
         <div className="flex flex-col justify-center align-middle px-3">
           <div className="w-fit mx-auto text-2xl">Success Register </div>

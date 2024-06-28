@@ -3,6 +3,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useFormik } from "formik";
 import { redirect, useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { loginSchema } from "@/components/Form/validation/authSchema";
 import InputField from "@/components/Form/Input/InputField";
@@ -100,6 +101,15 @@ const LoginPage = () => {
           className="mx-auto outline outline-1 outline-red-400 rounded-md py-1 px-2 mt-4"
         />
       ) : null}
+      <div className="mt-3 text-right text-[10px]">
+        Don&apos;t have an account?{" "}
+        <Link
+          href={ROUTE.REGISTER}
+          className="font-bold text-[12px] text-blue-500"
+        >
+          Register
+        </Link>
+      </div>
       <button
         form="login-form"
         type="submit"
