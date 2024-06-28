@@ -1,8 +1,9 @@
 "use client";
 import { ROUTE } from "@/constants/route";
+import { Token } from "@/utils/token.utils";
 import classNames from "classnames";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 
 const pathTexts = [
@@ -15,6 +16,7 @@ const pathTexts = [
 
 export default function SideNavigation() {
   const currentPathName = usePathname();
+  const router = useRouter();
 
   const isActiveLink = useCallback(
     (pathName: string, currentPathName: string) => {
@@ -40,9 +42,20 @@ export default function SideNavigation() {
     ));
   }, [currentPathName, isActiveLink]);
 
+  const onClickLogout = useCallback(() => {
+    Token.clear();
+    router.push(ROUTE.LOGIN);
+  }, [router]);
+
   return (
-    <div className="flex flex-col py-2 px-5 min-w-56  pl-10 mt-10">
-      {generateLinks()}
+    <div className="py-2 px-5 min-w-56  pl-10 mt-10">
+      <div className="flex flex-col ">{generateLinks()}</div>
+      <button
+        onClick={onClickLogout}
+        className="rounded-sm mt-16 font-bold round-md py-3 px-2 hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-700"
+      >
+        Logout
+      </button>
     </div>
   );
 }
