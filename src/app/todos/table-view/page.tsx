@@ -67,10 +67,10 @@ export default async function TodoTablePage() {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mx-auto">
       <table className="mt-3 ">
         <caption className=" text-2xl font-bold py-3 mb-5">
-          Todo in table view with custom column
+          Todo in table view with custom column (Full Server-Side Render)
         </caption>
         <thead>
           <tr className="bg-slate-400">
