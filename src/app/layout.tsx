@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SideNavigation from "@/components/Navigation/SideNavigation";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,12 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
-        <div className=" container flex flex-row">
-          <SideNavigation />
-          {children}
-        </div>
-      </body>
+      <body suppressHydrationWarning={true}>{children}</body>
     </html>
   );
 }
