@@ -153,6 +153,7 @@ e.g. ```src/utils/cookie.utils.ts```
 - For ``` Function Name ```  I using ```Camel Case``` 
   e.g. ```  getAllTodos() ```
 
+---
 
 #### Conventional Commits
   The commit message should be structured as follows:
