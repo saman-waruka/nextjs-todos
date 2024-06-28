@@ -1,7 +1,7 @@
 
 # Getting Started
 
-[LiveDemo](https://nextjs-todos-demo.vercel.app/)
+[Live Demo](https://nextjs-todos-demo.vercel.app/)
 
 ## To start this project
 1. Install dependencies
@@ -15,14 +15,36 @@ cp .env.example .env
 3. Fill environment variables in ```.env```
 ```
 NEXT_PUBLIC_API_ENDPOINT=your-api-endpoint
+HOST_URL=your-hosting-url
 ```
-
-4. Start 
+4. Start Dev
 ```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+---
+
+## For SEO 
+Update following files 
+
+- for ```robot.txt``` generation please see  ```src/app/robots.ts```
+```
+src
+└-- app
+    └--robots.ts
+```
+
+- for ```sitemap.xml``` generation please see ```src/app/sitemap.ts```
+  
+```
+src
+└-- app
+    └--sitemap.ts
+```
+
 
 ## Project Structure
 ### To create a page create page.tsx in sub-directory of ```src/app/```
